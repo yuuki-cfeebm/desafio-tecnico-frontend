@@ -9,16 +9,22 @@ function ChamadoEditar({ chamados, aoAlterar }) {
     (chamado) => chamado.id === Number(id)
   )
 
-  const [texto, setTexto] = useState(chamadoEncontrado?.texto ?? '')
+  const [titulo, setTitulo] = useState(chamadoEncontrado?.titulo ?? '')
   const [descricao, setDescricao] = useState(chamadoEncontrado?.descricao ?? '')
+  const [prioridade, setPrioridade] = useState(chamadoEncontrado?.prioridade ?? '')
+  const [solicitante, setSolicitante] = useState(chamadoEncontrado?.solicitante ?? '')
+  const [status, setStatus] = useState(chamadoEncontrado?.status ?? '')
 
   function alterarChamado(evento) {
     evento.preventDefault()
     
     const chamadoAtualizado = {
       id: Number(id),
-      texto,
+      titulo,
       descricao,
+      prioridade,
+      solicitante,
+      status
     }
     
     aoAlterar(chamadoAtualizado)
@@ -29,8 +35,9 @@ function ChamadoEditar({ chamados, aoAlterar }) {
     return (
       <main className="pagina-chamados">
         <h1>Chamado não encontrado</h1>
+          <strong>Dev: Kauã Yanase</strong>
 
-        <Link to="/chamados/listar">
+        <Link className='voltar-btn' to="/chamados/listar">
           Voltar para a lista de chamados
         </Link>
       </main>
@@ -40,17 +47,18 @@ function ChamadoEditar({ chamados, aoAlterar }) {
   return (
     <main className="pagina-chamados">
       <h1>Alterar chamado</h1>
+          <strong>Dev: Kauã Yanase</strong>
       
       <form
         className="formulario-chamado"
         onSubmit={alterarChamado}
       >
-        <label htmlFor="texto">Texto / Assunto</label>
+        <label htmlFor="titulo">Tíitulo</label>
         <input
-          id="texto"
+          id="titulo"
           type="text"
-          value={texto}
-          onChange={(evento) => setTexto(evento.target.value)}
+          value={titulo}
+          onChange={(evento) => setTitulo(evento.target.value)}
           required
         />
         
@@ -62,6 +70,31 @@ function ChamadoEditar({ chamados, aoAlterar }) {
           rows="5"
           required
         />
+
+        <label htmlFor="solicitante">Solicitante do chamado:</label>
+        <input
+            id="solicitante"
+            type="text"
+            value={solicitante}
+            onChange={(evento) => {
+              setSolicitante(evento.target.value)
+            }}
+            placeholder="Resumo do chamado"
+            required
+        />
+
+          <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)} name="" id="prioridade">
+              <option value="default">Selecione a opção</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+          </select>
+
+          <select value={status} onChange={(e) => setStatus(e.target.value)} name="status" id="status">
+              <option value="aberto">Aberto</option>
+              <option value="fechado">fechado</option>
+          </select>
         
         <button type="submit">
           Salvar alterações

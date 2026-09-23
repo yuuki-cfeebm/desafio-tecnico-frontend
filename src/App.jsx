@@ -60,7 +60,7 @@ function App() {
             <Header />
             <main className="conteudo-principal">
               <p className="introducao">
-              Aplicação desenvolvida por Kauã Yanase
+              <strong>dev: Kauã Yanase</strong>
               </p>
 
                 <section className="modulos">

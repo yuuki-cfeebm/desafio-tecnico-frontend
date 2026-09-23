@@ -15,6 +15,7 @@ function ChamadosLista({ chamados, aoExcluir }) {
     return (
         <main className="pagina-chamados">
             <h1>Lista de Chamados</h1>
+            <strong>Dev: Kauã Yanase</strong>
             
             {chamados.length === 0 ? (
                 <p className="lista-vazia">Nenhum chamado cadastrado.</p>
@@ -22,8 +23,11 @@ function ChamadosLista({ chamados, aoExcluir }) {
                 <ul className="lista-chamados">
                     {chamados.map((chamado) => (
                         <li key={chamado.id}>
-                            <strong>{chamado.texto}</strong>
-                            <p className="descricao-chamado">{chamado.descricao}</p>
+                            <p>Título: <span>{chamado.titulo}</span></p>
+                            <p>Descrição: <span>{chamado.descricao}</span></p>
+                            <p>Prioridade: <span>{chamado.prioridade}</span></p>
+                            <p>Solicitante: <span>{chamado.solicitante}</span></p>
+                            <p>Status: <span>{chamado.status}</span></p>
 
                             <div className="acoes-chamado">
                                 <button
@@ -45,7 +49,7 @@ function ChamadosLista({ chamados, aoExcluir }) {
                 </ul>
             )}
 
-            <Link to="/chamados">Voltar para Gerenciamento de Chamados</Link>
+            <Link className='voltar-btn' to="/chamados">Voltar para Gerenciamento de Chamados</Link>
         </main>
     )
 }

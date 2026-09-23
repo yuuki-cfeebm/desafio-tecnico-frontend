@@ -1,63 +1,43 @@
 import { useState } from 'react'
 import { Link } from 'react-router' 
 
-function ChamadosCadastrar({ aoCadastrar, chamados }) {
+function ChamadosCadastrar({ aoCadastrar }) {
     const [erros, setErros] = useState({})
     const [mensagemSucesso, setMensagemSucesso] = useState('')
 
-    // Novos estados focados apenas no Chamado
-    const [texto, setTexto] = useState('')
+    const [titulo, setTitulo] = useState('')
     const [descricao, setDescricao] = useState('')
-
-    function validarFormulario() {
-        const novosErros = {}
-        const textoTratado = texto.trim()
-        const descricaoTratada = descricao.trim()
-
-        if (textoTratado.length < 5) {
-            novosErros.texto = 'O texto (assunto) deve possuir no mínimo 5 caracteres.'
-        }
-
-        if (descricaoTratada.length < 10) {
-            novosErros.descricao = 'A descrição deve possuir no mínimo 10 caracteres para detalhar o problema.'
-        }
-
-        setErros(novosErros)
-        return Object.keys(novosErros).length === 0
-    }
-
-    function limparErro(campo) {
-        setErros((errosAtuais) => ({
-            ...errosAtuais,
-            [campo]: '',
-        }))
-        setMensagemSucesso('')
-    }
+    const [prioridade, setPrioridade] = useState(0)
+    const [solicitante, setSolicitante] = useState('')
+    const [status, setStatus] = useState('aberto')
 
     function cadastrarChamado(evento) {
         evento.preventDefault()
         setMensagemSucesso('')
-        
-        if (!validarFormulario()) {
-            return
-        }
 
-        // Cria o objeto apenas com os dados do chamado
         const novoChamado = {
-            texto: texto.trim(),
+            titulo: titulo.trim(),
             descricao: descricao.trim(),
+            solicitante: solicitante.trim(),
+            prioridade: Number(prioridade),
+            status: status
         }
 
         aoCadastrar(novoChamado)
         setMensagemSucesso('Chamado cadastrado com sucesso!')
+
         setErros({})
-        setTexto('')
+        setTitulo('')
         setDescricao('')
+        setPrioridade('default')
+        setSolicitante('')
+        setStatus('fechado')
     }
 
     return (
         <main className="pagina-chamados">
             <h1>Cadastrar novo chamado</h1>
+            <strong>Dev: Kauã Yanase</strong>
             
             {mensagemSucesso && (
                 <p className="mensagem-sucesso">
@@ -67,49 +47,74 @@ function ChamadosCadastrar({ aoCadastrar, chamados }) {
 
             <form className="formulario-chamado" onSubmit={cadastrarChamado} noValidate>
                 
-                <label htmlFor="texto">Texto / Assunto</label>
-                <input
-                    id="texto"
-                    type="text"
-                    value={texto}
-                    onChange={(evento) => {
-                        setTexto(evento.target.value)
-                        limparErro('texto')
-                    }}
-                    className={erros.texto ? 'campo-invalido' : ''}
-                    placeholder="Resumo do chamado"
-                    required
-                />
-                {erros.texto && (
-                    <span className="mensagem-erro">
-                        {erros.texto}
-                    </span>
-                )}
+                <div className="form-cadastro">
+                    <div className="wrapper">
+                    <label htmlFor="titulo">Título</label>
+                    <input
+                        id="titulo"
+                        type="text"
+                        value={titulo}
+                        onChange={(evento) => {
+                            setTitulo(evento.target.value)
+                        }}
+                        className={erros.titulo ? 'campo-invalido' : ''}
+                        placeholder="Título do Chamado"
+                        required
+                    />
+                </div>
+
+                <div className="wrapper">
 
                 <label htmlFor="descricao">Descrição</label>
-                {/* Utilizando textarea por ser melhor para descrições longas */}
                 <textarea
                     id="descricao"
                     value={descricao}
                     onChange={(evento) => {
                         setDescricao(evento.target.value)
-                        limparErro('descricao')
                     }}
                     className={erros.descricao ? 'campo-invalido' : ''}
                     placeholder="Descreva os detalhes do chamado aqui..."
                     rows="5"
                     required
                 />
-                {erros.descricao && (
-                    <span className="mensagem-erro">
-                        {erros.descricao}
-                    </span>
-                )}
+                </div>
 
-                <button type="submit">Cadastrar chamado</button>
+                <div className="wrapper solicitante">
+
+                <label id='solicitante' htmlFor="solicitante">Solicitante do chamado:</label>
+                <input
+                    id="solicitante"
+                    type="text"
+                    value={solicitante}
+                    onChange={(evento) => {
+                        setSolicitante(evento.target.value)
+                    }}
+                    className={erros.solicitante ? 'campo-invalido' : ''}
+                    placeholder="Resumo do chamado"
+                    required
+                />
+                </div>
+
+
+                <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)} name="" id="prioridade">
+                    <option value="default">Selecione a opção</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
+
+                <select value={status} onChange={(e) => setStatus(e.target.value)} name="status" id="status">
+                    <option value="aberto">Aberto</option>
+                    <option value="fechado">fechado</option>
+                </select>
+                </div>
+
+
+                <button className='btn cadastrar-btn' type="submit">Cadastrar chamado</button>
             </form>
             
-            <Link to="/chamados">Voltar para Gerenciamento de chamados</Link>
+            <Link className='voltar-btn' to="/chamados">Voltar para Gerenciamento de chamados</Link>
         </main>
     )
 }

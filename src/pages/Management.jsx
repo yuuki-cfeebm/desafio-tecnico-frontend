@@ -4,6 +4,7 @@ function Management() {
     return (
         <div className="pagina-clientes">
             <h1>Painel de Gerenciamento de Chamados</h1>
+            <strong>Dev: Kauã Yanase</strong>
             <div className="opcoes-chamados">
                 <Link to="/chamados/listar">
                     Listar chamados
@@ -12,7 +13,7 @@ function Management() {
                     Cadastrar novo chamado
                 </Link>
             </div>
-            <Link to="/">
+            <Link className="voltar-btn" to="/">
                 Voltar para a página inicial
             </Link>
         </div>
