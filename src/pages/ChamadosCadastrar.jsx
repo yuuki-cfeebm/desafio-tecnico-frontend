@@ -95,20 +95,25 @@ function ChamadosCadastrar({ aoCadastrar }) {
                 />
                 </div>
 
-
+                <div className="wrapper">
+                <label htmlFor="">Proridade:</label>
                 <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)} name="" id="prioridade">
-                    <option value="default">Selecione a opção</option>
+                    <option value="default">Selecione a prioridade</option>
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
                     <option value="4">4</option>
                 </select>
-
+                </div>
+                
+                <div className="wrapper">   
+                <label htmlFor="">Status:</label>
                 <select value={status} onChange={(e) => setStatus(e.target.value)} name="status" id="status">
                     <option value="aberto">Aberto</option>
                     <option value="fechado">fechado</option>
                 </select>
                 </div>
+            </div>
 
 
                 <button className='btn cadastrar-btn' type="submit">Cadastrar chamado</button>

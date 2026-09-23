@@ -17,7 +17,7 @@ function ChamadoEditar({ chamados, aoAlterar }) {
 
   function alterarChamado(evento) {
     evento.preventDefault()
-    
+
     const chamadoAtualizado = {
       id: Number(id),
       titulo,
@@ -26,7 +26,7 @@ function ChamadoEditar({ chamados, aoAlterar }) {
       solicitante,
       status
     }
-    
+
     aoAlterar(chamadoAtualizado)
     alert('Chamado alterado com sucesso!')
   }
@@ -35,9 +35,12 @@ function ChamadoEditar({ chamados, aoAlterar }) {
     return (
       <main className="pagina-chamados">
         <h1>Chamado não encontrado</h1>
-          <strong>Dev: Kauã Yanase</strong>
+        <strong>Dev: Kauã Yanase</strong>
 
-        <Link className='voltar-btn' to="/chamados/listar">
+        <Link
+          className="voltar-btn"
+          to="/chamados/listar"
+        >
           Voltar para a lista de chamados
         </Link>
       </main>
@@ -46,64 +49,119 @@ function ChamadoEditar({ chamados, aoAlterar }) {
 
   return (
     <main className="pagina-chamados">
+
       <h1>Alterar chamado</h1>
-          <strong>Dev: Kauã Yanase</strong>
-      
+
+      <strong>Dev: Kauã Yanase</strong>
+
       <form
-        className="formulario-chamado"
+        className="formulario-chamado form-cadastro"
         onSubmit={alterarChamado}
       >
-        <label htmlFor="titulo">Tíitulo</label>
-        <input
-          id="titulo"
-          type="text"
-          value={titulo}
-          onChange={(evento) => setTitulo(evento.target.value)}
-          required
-        />
-        
-        <label htmlFor="descricao">Descrição</label>
-        <textarea
-          id="descricao"
-          value={descricao}
-          onChange={(evento) => setDescricao(evento.target.value)}
-          rows="5"
-          required
-        />
 
-        <label htmlFor="solicitante">Solicitante do chamado:</label>
-        <input
+        <div className="wrapper">
+          <label htmlFor="titulo">
+            Título
+          </label>
+
+          <input
+            id="titulo"
+            type="text"
+            value={titulo}
+            onChange={(evento) => setTitulo(evento.target.value)}
+            required
+          />
+        </div>
+
+        <div className="wrapper">
+          <label htmlFor="descricao">
+            Descrição
+          </label>
+
+          <textarea
+            id="descricao"
+            value={descricao}
+            onChange={(evento) => setDescricao(evento.target.value)}
+            rows="5"
+            required
+          />
+        </div>
+
+        <div className="wrapper">
+          <label htmlFor="solicitante">
+            Solicitante do chamado:
+          </label>
+
+          <input
             id="solicitante"
             type="text"
             value={solicitante}
-            onChange={(evento) => {
-              setSolicitante(evento.target.value)
-            }}
+            onChange={(evento) => setSolicitante(evento.target.value)}
             placeholder="Resumo do chamado"
             required
-        />
+          />
+        </div>
 
-          <select value={prioridade} onChange={(e) => setPrioridade(e.target.value)} name="" id="prioridade">
-              <option value="default">Selecione a opção</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-          </select>
+        <div className="wrapper">
+          <label htmlFor="prioridade">
+            Prioridade
+          </label>
 
-          <select value={status} onChange={(e) => setStatus(e.target.value)} name="status" id="status">
-              <option value="aberto">Aberto</option>
-              <option value="fechado">fechado</option>
+          <select
+            value={prioridade}
+            onChange={(evento) => setPrioridade(evento.target.value)}
+            id="prioridade"
+            required
+          >
+            <option value="">
+              Selecione a prioridade
+            </option>
+
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
           </select>
-        
-        <button type="submit">
+        </div>
+
+        <div className="wrapper">
+          <label htmlFor="status">
+            Status
+          </label>
+
+          <select
+            value={status}
+            onChange={(evento) => setStatus(evento.target.value)}
+            name="status"
+            id="status"
+            required
+          >
+            <option value="aberto">
+              Aberto
+            </option>
+
+            <option value="fechado">
+              Fechado
+            </option>
+          </select>
+        </div>
+
+        <button
+          type="submit"
+          className="btn"
+        >
           Salvar alterações
         </button>
+
       </form>
-      
-      <Link to="/chamados/listar">
+
+      <Link
+        className="voltar-btn"
+        to="/chamados/listar"
+      >
         Voltar para a lista de chamados
       </Link>
+
     </main>
   )
 }

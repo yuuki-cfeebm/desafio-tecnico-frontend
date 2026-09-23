@@ -4,7 +4,7 @@ function ChamadosLista({ chamados, aoExcluir }) {
 
     function confirmarExclusao(chamado) {
         const confirmacao = window.confirm(
-            `Deseja realmente excluir o chamado "${chamado.texto}"?`
+            `Deseja realmente excluir o chamado "${chamado.titulo}"?`
         )
 
         if (confirmacao) {
