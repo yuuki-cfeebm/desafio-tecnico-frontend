@@ -2,7 +2,7 @@ import './App.css'
 import { Route, Routes } from 'react-router'
 import { useState } from 'react'
 import Management from './pages/Management'
-import Header from './components/Header'
+import Layout from './components/Layout'
 import Card from './components/Card'
 import ChamadosCadastrar from './pages/ChamadosCadastrar'
 import ChamadosLista from './pages/ChamadosLista'
@@ -10,18 +10,39 @@ import ChamadoEditar from './pages/ChamadosEditar'
 
 const chamadosIniciais = []
 
+const modulos = [
+  {
+    id: 1,
+    icone: '🛠️',
+    titulo: 'Gerenciamento de Chamados',
+    descricao: 'Cadastre, consulte, edite e exclua chamados.',
+    rota: '/chamados'
+  }
+]
+
+function Inicio() {
+  return (
+    <section className="pagina">
+      <div className="hero">
+        <h1>Sistema de Gestão de Chamados</h1>
+        <p className="subtitulo">Organize e acompanhe as solicitações em um só lugar.</p>
+      </div>
+      <div className="grade-cards">
+        {modulos.map((modulo) => (
+          <Card
+            key={modulo.id}
+            icone={modulo.icone}
+            titulo={modulo.titulo}
+            descricao={modulo.descricao}
+            rota={modulo.rota}
+          />
+        ))}
+      </div>
+    </section>
+  )
+}
+
 function App() {
-
-  const modulos = [
-    {
-      id: 1,
-      titulo: 'Gerenciamento de Chamados',
-      descricao: 'Cadastre e consulte os chamados.',
-      rota: "/chamados"
-    }
-  ]
-
-  // Estado atualizado de 'clientes' para 'chamados'
   const [chamados, setChamados] = useState(chamadosIniciais)
 
   function adicionarChamado(novoChamado) {
@@ -53,36 +74,13 @@ function App() {
 
   return (
     <Routes>
-      <Route  
-        path='/'
-        element={
-          <div className="aplicacao">
-            <Header />
-            <main className="conteudo-principal">
-              <p className="introducao">
-              <strong>dev: Kauã Yanase</strong>
-              </p>
-
-                <section className="modulos">
-                {modulos.map((modulo) => (
-                  <Card
-                    key={modulo.id}
-                    titulo={modulo.titulo}
-                    descricao={modulo.descricao}
-                    rota={modulo.rota}
-                  />
-                ))}
-
-              </section>
-            </main>
-          </div>
-        }
-      />
-      
-      <Route path="/chamados" element={<Management />} />
-      <Route path="/chamados/cadastrar" element={<ChamadosCadastrar aoCadastrar={adicionarChamado} chamados={chamados}/>} />
-      <Route path="/chamados/listar" element={<ChamadosLista chamados={chamados} aoExcluir={excluirChamado} />} />
-      <Route path="/chamados/editar/:id" element={<ChamadoEditar chamados={chamados} aoAlterar={alterarChamado} />}/>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Inicio />} />
+        <Route path="/chamados" element={<Management />} />
+        <Route path="/chamados/cadastrar" element={<ChamadosCadastrar aoCadastrar={adicionarChamado} />} />
+        <Route path="/chamados/listar" element={<ChamadosLista chamados={chamados} aoExcluir={excluirChamado} />} />
+        <Route path="/chamados/editar/:id" element={<ChamadoEditar chamados={chamados} aoAlterar={alterarChamado} />} />
+      </Route>
     </Routes>
   )
 }
