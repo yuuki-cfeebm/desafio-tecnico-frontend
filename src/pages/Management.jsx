@@ -1,22 +1,29 @@
-import { Link } from "react-router"
+import Card from "../components/Card"
 
 function Management() {
     return (
-        <div className="pagina-clientes">
-            <h1>Painel de Gerenciamento de Chamados</h1>
-            <strong>Dev: Kauã Yanase</strong>
-            <div className="opcoes-chamados">
-                <Link to="/chamados/listar">
-                    Listar chamados
-                </Link>
-                <Link to="/chamados/cadastrar">
-                    Cadastrar novo chamado
-                </Link>
+        <section className="pagina">
+            <div className="pagina-topo">
+                <div>
+                    <h1>Gerenciamento de Chamados</h1>
+                    <p className="subtitulo">O que você deseja fazer?</p>
+                </div>
             </div>
-            <Link className="voltar-btn" to="/">
-                Voltar para a página inicial
-            </Link>
-        </div>
+            <div className="grade-cards">
+                <Card
+                    icone="📋"
+                    titulo="Listar chamados"
+                    descricao="Consulte, edite ou exclua os chamados cadastrados."
+                    rota="/chamados/listar"
+                />
+                <Card
+                    icone="➕"
+                    titulo="Novo chamado"
+                    descricao="Abra um novo chamado preenchendo o formulário."
+                    rota="/chamados/cadastrar"
+                />
+            </div>
+        </section>
     )
 }
 
